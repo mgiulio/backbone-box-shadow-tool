@@ -12,56 +12,63 @@ window.BoxShadow = Backbone.Model.extend({
 	}
 });
 
-window.TodoView = Backbone.View.extend({
- tagName:  'li',
+boxShadow = new BoxShadow();
 
- // Cache the template function for a single item.
- template: _.template($('#item-template').html()),
+boxShadowWriter = {
+	set: function(horizOffset, vertOffset, blurRadius, spreadDistance, color) {
+		this.horizOffset = horizOffset;
+		this.vertOffset = vertOffset;
+		this.blurRadius = blurRadius;
+		this.spreadDistance = spreadDistance;
+		this.color = color;
+	},
+	toString: function() {
+	}
+};
 
- // The DOM events specific to an item.
- events: {
- },
+window.SampleView = Backbone.View.extend({
+	el: $('#sample-box'),
+	initialize: function() {
+		this.model.bind('change', this.render, this);
+	},
+	render: function() {
+		$(this.el).css(this.model.toJSON());
+		return this;
+	}
+});
 
- // The TodoView listens for changes to its model, re-rendering.
- initialize: function() {
-	this.model.bind('change', this.render, this);
-	this.model.bind('destroy', this.remove, this);
- },
+window.OutputView = Backbone.View.extend({
+	el: $('#css-ouput > textarea'),
+	initialize: function() {
+		this.model.bind('change', this.render, this);
+	},
+	render: function() {
+		boxShadowWriter.set(this.model.toJSON());
+		$(this.el).html(boxShadowWriter);
+		return this;
+	}
+});
 
- // Re-render the contents of the todo item.
- render: function() {
-	$(this.el).html(this.template(this.model.toJSON()));
-	return this;
- }
+window.ControlView = Backbone.View.extend({
+	el: $('#sample-box'),
+	initialize: function() {
+		this.model.bind('change', this.render, this);
+	},
+	render: function() {
+		$(this.el).css(this.model.toJSON());
+		return this;
+	}
 });
 
 window.AppView = Backbone.View.extend({
- el: $("#todoapp"),
-
- // Our template for the line of statistics at the bottom of the app.
- statsTemplate: _.template($('#stats-template').html()),
-
- events: {
- },
-
- initialize: function() {
-	Todos.bind('add',   this.addOne, this);
-	Todos.bind('reset', this.addAll, this);
-	Todos.bind('all',   this.render, this);
-
-	Todos.fetch();
- },
-
- render: function() {
-	this.$('#todo-stats').html(this.statsTemplate({
-	  total:      Todos.length,
-	  done:       Todos.done().length,
-	  remaining:  Todos.remaining().length
-	}));
- },
+	el: $('.widget.box-shadow'),
+	initialize: function() {
+		this.sampleView = new SampleView({model: boxShadow});
+		this.outputView = new OutputView({model: boxShadow});
+		this.controlView = new ControlView({model: boxShadow});
+	 }
 });
 
-// Finally, we kick things off by creating the **App**.
 window.App = new AppView;
 
 });
