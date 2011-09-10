@@ -3,8 +3,11 @@ $(function() {
 window.BoxShadow = Backbone.Model.extend({
 	defaults: function() {
 		return {
-			//done:  false,
-			//order: Todos.nextOrder()
+			horizOffset: 0, 
+			vertOffset: 0,
+			blurRadius: 0,
+			spreadDistance: 0,
+			color: 'rgba(0,0,0,1)'
 		};
 	}
 });
