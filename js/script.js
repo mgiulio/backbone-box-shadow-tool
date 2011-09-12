@@ -7,7 +7,7 @@ window.BoxShadow = Backbone.Model.extend({
 			vertOffset: 0,
 			blurRadius: 0,
 			spreadDistance: 0,
-			color: 'rgba(0,0,0,1)'
+			color: new Color('rgba(0,0,0,0.5)')
 		};
 	}
 });
