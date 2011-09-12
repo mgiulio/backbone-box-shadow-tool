@@ -50,7 +50,15 @@ window.OutputView = Backbone.View.extend({
 });
 
 window.ControlView = Backbone.View.extend({
-	el: $('#sample-box'),
+	el: $('#controls'),
+	events: {
+		/*
+			atach handlers to domand custom (from widgets) events
+			read desidered changes
+			compute the finalmodelchange
+			change the model
+		*/
+	},
 	initialize: function() {
 		this.model.bind('change', this.render, this);
 	},
