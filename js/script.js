@@ -9,42 +9,50 @@ window.BoxShadow = Backbone.Model.extend({
 			spreadDistance: 0,
 			color: new Color('rgba(0,0,0,0.5)')
 		};
+	},
+	getCSSText: function() {
+		return this.mozilla() +
+			this.opera() +
+			this.std()
+		;
+	},
+	mozilla: function() {
+		return '';
+	},
+	opera: function() {
+		return '';
+	},
+	std: function() {
+		return 'box-shadow: ' + 
+			this.attributes.horizOffset + 'px ' +
+			this.attributes.vertOffset + 'px ' +
+			this.attributes.blurRadius + 'px ' +
+			this.attributes.spreadDistance + 'px ' +
+			this.attributes.color
+		;
 	}
 });
 
 boxShadow = new BoxShadow();
 
-boxShadowWriter = {
-	set: function(horizOffset, vertOffset, blurRadius, spreadDistance, color) {
-		this.horizOffset = horizOffset;
-		this.vertOffset = vertOffset;
-		this.blurRadius = blurRadius;
-		this.spreadDistance = spreadDistance;
-		this.color = color;
-	},
-	toString: function() {
-	}
-};
-
 window.SampleView = Backbone.View.extend({
-	el: $('#sample-box'),
+	el: $('#sample-box').get(0),
 	initialize: function() {
 		this.model.bind('change', this.render, this);
 	},
 	render: function() {
-		$(this.el).css(this.model.toJSON());
+		this.el.style.cssText = this.model.getCSSText();
 		return this;
 	}
 });
 
 window.OutputView = Backbone.View.extend({
-	el: $('#css-ouput > textarea'),
+	el: $('#css-output > textarea'),
 	initialize: function() {
 		this.model.bind('change', this.render, this);
 	},
 	render: function() {
-		boxShadowWriter.set(this.model.toJSON());
-		$(this.el).html(boxShadowWriter);
+		this.el.html(this.model.getCSSText());
 		return this;
 	}
 });
@@ -63,7 +71,7 @@ window.ControlView = Backbone.View.extend({
 		this.model.bind('change', this.render, this);
 	},
 	render: function() {
-		$(this.el).css(this.model.toJSON());
+		//$(this.el).css(this.model.toJSON());
 		return this;
 	}
 });
@@ -74,6 +82,8 @@ window.AppView = Backbone.View.extend({
 		this.sampleView = new SampleView({model: boxShadow});
 		this.outputView = new OutputView({model: boxShadow});
 		this.controlView = new ControlView({model: boxShadow});
+		
+		boxShadow.set({blurRadius: 10});
 	 }
 });
 
