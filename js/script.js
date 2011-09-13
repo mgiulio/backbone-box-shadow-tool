@@ -11,25 +11,13 @@ window.BoxShadow = Backbone.Model.extend({
 		};
 	},
 	getCSSText: function() {
-		return this.mozilla() +
-			this.opera() +
-			this.std()
-		;
-	},
-	mozilla: function() {
-		return '';
-	},
-	opera: function() {
-		return '';
-	},
-	std: function() {
-		return 'box-shadow: ' + 
-			this.attributes.horizontalOffset + 'px ' +
+		var v = this.attributes.horizontalOffset + 'px ' +
 			this.attributes.verticalOffset + 'px ' +
 			this.attributes.blurRadius + 'px ' +
 			this.attributes.spreadDistance + 'px ' +
-			this.attributes.color
-		;
+			this.attributes.color + ';\n';
+			
+		return '-moz-box-shadow: ' + v + '-webkit-box-shadow: ' + v + 'box-shadow: ' + v;
 	}
 });
 
