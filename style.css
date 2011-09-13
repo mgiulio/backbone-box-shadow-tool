@@ -7,6 +7,9 @@ body {
    background: #ffffff;
    color: #333333;
 }
+section {
+	margin-right: 10px;
+}
 section#sample-box {
 	width: 128px;
 	height: 128px;

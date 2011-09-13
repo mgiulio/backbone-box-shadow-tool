@@ -3,8 +3,8 @@ $(function() {
 window.BoxShadow = Backbone.Model.extend({
 	defaults: function() {
 		return {
-			horizOffset: 0, 
-			vertOffset: 0,
+			horizontalOffset: 0, 
+			verticalOffset: 0,
 			blurRadius: 0,
 			spreadDistance: 0,
 			color: new Color('rgba(0,0,0,0.5)')
@@ -24,8 +24,8 @@ window.BoxShadow = Backbone.Model.extend({
 	},
 	std: function() {
 		return 'box-shadow: ' + 
-			this.attributes.horizOffset + 'px ' +
-			this.attributes.vertOffset + 'px ' +
+			this.attributes.horizontalOffset + 'px ' +
+			this.attributes.verticalOffset + 'px ' +
 			this.attributes.blurRadius + 'px ' +
 			this.attributes.spreadDistance + 'px ' +
 			this.attributes.color
@@ -60,6 +60,10 @@ window.OutputView = Backbone.View.extend({
 window.ControlView = Backbone.View.extend({
 	el: $('#controls'),
 	events: {
+		'change #horizontal-offset': 'setHorizontalOffset',
+		'change #vertical-offset': 'setVerticalOffset',
+		'change #spread-distance': 'setSpreadDistance',
+		'change #blur-radius': 'setBlurRadius'
 		/*
 			atach handlers to domand custom (from widgets) events
 			read desidered changes
@@ -73,6 +77,19 @@ window.ControlView = Backbone.View.extend({
 	render: function() {
 		//$(this.el).css(this.model.toJSON());
 		return this;
+	},
+	setHorizontalOffset: function() {
+		this.model.set({horizontalOffset: this.$('#horizontal-offset').val()});
+	},
+	setVerticalOffset: function() {
+		this.model.set({verticalOffset: this.$('#vertical-offset').val()});
+	},
+	setSpreadDistance: function() {
+		console.log('spreadDistanec');
+		this.model.set({spreadDistance: this.$('#spread-distance').val()});
+	},
+	setBlurRadius: function() {
+		this.model.set({blurRadius: this.$('#blur-radius').val()});
 	}
 });
 
