@@ -17,6 +17,7 @@ section#controls {
 	width: 400px;
 	float: left;
 	background: #444;
+	color: #dddddd;
 }
 section#css-output {
 	float: left;
