@@ -33,11 +33,10 @@ window.BoxShadow = Backbone.Model.extend({
 	}
 });
 
-boxShadow = new BoxShadow();
-
 window.SampleView = Backbone.View.extend({
 	el: $('#sample-box').get(0),
 	initialize: function() {
+		this.render();
 		this.model.bind('change', this.render, this);
 	},
 	render: function() {
@@ -49,6 +48,7 @@ window.SampleView = Backbone.View.extend({
 window.OutputView = Backbone.View.extend({
 	el: $('#css-output > textarea'),
 	initialize: function() {
+		this.render();
 		this.model.bind('change', this.render, this);
 	},
 	render: function() {
@@ -62,8 +62,8 @@ window.ControlView = Backbone.View.extend({
 	events: {
 		'change #horizontal-offset': 'setHorizontalOffset',
 		'change #vertical-offset': 'setVerticalOffset',
-		'change #spread-distance': 'setSpreadDistance',
-		'change #blur-radius': 'setBlurRadius'
+		'change #blur-radius': 'setBlurRadius',
+		'change #spread-distance': 'setSpreadDistance'
 		/*
 			atach handlers to domand custom (from widgets) events
 			read desidered changes
@@ -72,11 +72,8 @@ window.ControlView = Backbone.View.extend({
 		*/
 	},
 	initialize: function() {
+		this.render();
 		this.model.bind('change', this.render, this);
-	},
-	render: function() {
-		//$(this.el).css(this.model.toJSON());
-		return this;
 	},
 	setHorizontalOffset: function() {
 		this.model.set({horizontalOffset: this.$('#horizontal-offset').val()});
@@ -90,17 +87,25 @@ window.ControlView = Backbone.View.extend({
 	},
 	setBlurRadius: function() {
 		this.model.set({blurRadius: this.$('#blur-radius').val()});
+	},
+	render: function() {
+		this.$('#horizontal-offset').val(this.model.get('horizontalOffset'));
+		this.$('#vertical-offset').val(this.model.get('verticalOffset'));
+		this.$('#vertical-offset').val(this.model.get('verticalOffset'));
+		this.$('#blur-radius').val(this.model.get('blurRadius'));
+		this.$('#spread-distance').val(this.model.get('spreadDistance'));
+		return this;
 	}
 });
 
 window.AppView = Backbone.View.extend({
 	el: $('.widget.box-shadow'),
 	initialize: function() {
+		var boxShadow = new BoxShadow(/* {horizontalOffset: 10} */);
+		
 		this.sampleView = new SampleView({model: boxShadow});
 		this.outputView = new OutputView({model: boxShadow});
 		this.controlView = new ControlView({model: boxShadow});
-		
-		boxShadow.set({blurRadius: 10});
 	 }
 });
 
