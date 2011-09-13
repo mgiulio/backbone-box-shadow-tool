@@ -34,7 +34,7 @@ window.SampleView = Backbone.View.extend({
 });
 
 window.OutputView = Backbone.View.extend({
-	el: $('#css-output > textarea'),
+	el: $('#css-output'),
 	initialize: function() {
 		this.render();
 		this.model.bind('change', this.render, this);

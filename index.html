@@ -13,18 +13,38 @@
 </header>
 
 <article class="widget box-shadow">
-	<section id="sample-box">
+	<section id="sample-box-panel">
+		<div id="sample-box"></div>
 	</section>
-	<section id="controls">
-		<label for="horizontal-offset">horizontal offset(px)</label><input id="horizontal-offset" type="text">
-		<label for="vertical-offset">vertical offset(px)</label><input id="vertical-offset" type="text">
-		<label for="blur-radius">Blur radius(px)</label><input id="blur-radius" type="text">
-		<label for="spread-distance">Spread distance(px)</label><input id="spread-distance" type="text">
-		<label for="color">Color(rgb hex)</label><input id="color" type="text">
-	</section>
-	<section id="css-output">
-		<textarea></textarea>
-	</section>
+	<fieldset id="controls">
+		<div>
+			<label for="horizontal-offset" title="horizontal offset">hOff</label>
+			<input id="horizontal-offset" type="text">
+			px
+		</div>
+		<div>
+			<label for="vertical-offset" title="vertical offset">vOff</label>
+			<input id="vertical-offset" type="text">
+			px
+		</div>
+		<div>
+			<label for="blur-radius" title="blur distance">blur</label>
+			<input id="blur-radius" type="text">
+			px
+		</div>
+		<div>
+			<label for="spread-distance" title="spread distance">spread</label>
+			<input id="spread-distance" type="text">
+			px
+		</div>
+		<div>
+			<label for="color" title="color">color</label>
+			<input id="color" type="text">
+			as you like
+		</div>
+	</fieldset>
+	<textarea id="css-output" rows="8"></textarea>
+	<div style="clear: both;">&nbsp;</div>
 </article>
 
 <footer>
