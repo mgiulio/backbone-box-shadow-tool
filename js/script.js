@@ -47,40 +47,21 @@ window.OutputView = Backbone.View.extend({
 window.ControlView = Backbone.View.extend({
 	el: $('#controls'),
 	events: {
-		'change #horizontal-offset': 'setHorizontalOffset',
-		'change #vertical-offset': 'setVerticalOffset',
-		'change #blur-radius': 'setBlurRadius',
-		'change #spread-distance': 'setSpreadDistance',
-		'change #color': 'setColor'
+		'change': 'onChange'
+	},
+	onChange: function(e) {
+		var o = {};
+		o[e.target.id] = e.target.value;
+		this.model.set(o);
 	},
 	initialize: function() {
-		this.render();
-	},
-	setHorizontalOffset: function() {
-		this.model.set({horizontalOffset: this.$('#horizontal-offset').val()});
-	},
-	setVerticalOffset: function() {
-		this.model.set({verticalOffset: this.$('#vertical-offset').val()});
-	},
-	setBlurRadius: function() {
-		this.model.set({blurRadius: this.$('#blur-radius').val()});
-	},
-	setSpreadDistance: function() {
-		this.model.set({spreadDistance: this.$('#spread-distance').val()});
-	},
-	setColor: function() {
-		this.model.set({color: this.$('#color').val()});
-	},
-	render: function() {
-		this.$('#horizontal-offset').val(this.model.get('horizontalOffset'));
-		this.$('#vertical-offset').val(this.model.get('verticalOffset'));
-		this.$('#vertical-offset').val(this.model.get('verticalOffset'));
-		this.$('#blur-radius').val(this.model.get('blurRadius'));
-		this.$('#spread-distance').val(this.model.get('spreadDistance'));
+		this.$('#horizontalOffset').val(this.model.get('horizontalOffset'));
+		this.$('#verticalOffset').val(this.model.get('verticalOffset'));
+		this.$('#verticalOffset').val(this.model.get('verticalOffset'));
+		this.$('#blurRadius').val(this.model.get('blurRadius'));
+		this.$('#spreadDistance').val(this.model.get('spreadDistance'));
 		this.$('#color').val(this.model.get('color'));
-		
-		return this;
-	}
+	},
 });
 
 window.AppView = Backbone.View.extend({
