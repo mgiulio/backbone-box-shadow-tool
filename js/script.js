@@ -7,7 +7,7 @@ window.BoxShadow = Backbone.Model.extend({
 			verticalOffset: 0,
 			blurRadius: 0,
 			spreadDistance: 0,
-			color: new Color('rgba(0,0,0,0.5)')
+			color: 'rgba(0,0,0,0.5)'
 		};
 	},
 	getCSSText: function() {
@@ -16,7 +16,6 @@ window.BoxShadow = Backbone.Model.extend({
 			this.attributes.blurRadius + 'px ' +
 			this.attributes.spreadDistance + 'px ' +
 			this.attributes.color + ';\n';
-			
 		return '-moz-box-shadow: ' + v + '-webkit-box-shadow: ' + v + 'box-shadow: ' + v;
 	}
 });
@@ -71,7 +70,7 @@ window.ControlView = Backbone.View.extend({
 		this.model.set({spreadDistance: this.$('#spread-distance').val()});
 	},
 	setColor: function() {
-		this.model.set({color: new Color(this.$('#color').val())});
+		this.model.set({color: this.$('#color').val()});
 	},
 	render: function() {
 		this.$('#horizontal-offset').val(this.model.get('horizontalOffset'));
