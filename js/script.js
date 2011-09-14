@@ -53,12 +53,6 @@ window.ControlView = Backbone.View.extend({
 		'change #blur-radius': 'setBlurRadius',
 		'change #spread-distance': 'setSpreadDistance',
 		'change #color': 'setColor'
-		/*
-			atach handlers to domand custom (from widgets) events
-			read desidered changes
-			compute the finalmodelchange
-			change the model
-		*/
 	},
 	initialize: function() {
 		this.render();
