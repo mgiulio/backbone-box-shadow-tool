@@ -4,18 +4,18 @@ var
 	BoxShadowModel = Backbone.Model.extend({
 		defaults: function() {
 			return {
-				horizontalOffset: 0, 
-				verticalOffset: 0,
-				blurRadius: 0,
-				spreadDistance: 0,
+				horizontalOffset: '0px', 
+				verticalOffset: '0px',
+				blurRadius: '0px',
+				spreadDistance: '0px',
 				color: 'rgba(0,0,0,0.5)'
 			};
 		},
 		getCSSText: function() {
-			var v = this.attributes.horizontalOffset + 'px ' +
-				this.attributes.verticalOffset + 'px ' +
-				this.attributes.blurRadius + 'px ' +
-				this.attributes.spreadDistance + 'px ' +
+			var v = this.attributes.horizontalOffset + ' ' +
+				this.attributes.verticalOffset + ' ' +
+				this.attributes.blurRadius + ' ' +
+				this.attributes.spreadDistance + ' ' +
 				this.attributes.color + ';\n';
 			return '-moz-box-shadow: ' + v + '-webkit-box-shadow: ' + v + 'box-shadow: ' + v;
 		}
@@ -49,15 +49,33 @@ var
 		},
 		onChange: function(e) {
 			var o = {};
-			o[e.target.id] = e.target.value;
+			o[e.target.id] = e.target.value + $(e.target).next().val();
 			this.model.set(o);
 		},
 		initialize: function() {
-			this.$('#horizontalOffset').val(this.model.get('horizontalOffset'));
-			this.$('#verticalOffset').val(this.model.get('verticalOffset'));
-			this.$('#verticalOffset').val(this.model.get('verticalOffset'));
-			this.$('#blurRadius').val(this.model.get('blurRadius'));
-			this.$('#spreadDistance').val(this.model.get('spreadDistance'));
+			var
+				parse = function(x) {
+					var v = parseFloat(x);
+					return [v, x.replace(v, '')];
+				},
+				m = {px:0, em:1, cm:2, mm:3, in:4},
+				self = this
+			;
+			
+			_.each(['horizontalOffset', 'verticalOffset', 'blurRadius', 'spreadDistance'], function(attr) {
+				var a = parse(self.model.get(attr));
+				self.$('#' + attr)
+					.val(a[0])
+					.next()
+						.children()
+							.find(':selected')
+								.attr('selected', '')
+								.end()
+							.get(m[a[1]])
+								.selected = 'selected'
+				;
+			});
+			
 			this.$('#color').val(this.model.get('color'));
 		}
 	}),
@@ -65,10 +83,10 @@ var
 		el: $('.widget.box-shadow'),
 		initialize: function() {
 			var boxShadow = new BoxShadowModel({
-				horizontalOffset: 5,
-				verticalOffset: 5,
-				blurRadius: 5,
-				spreadDistance: 3
+				horizontalOffset: '5px',
+				verticalOffset: '5px',
+				blurRadius: '5px',
+				spreadDistance: '3px'
 			});
 			this.sampleView = new SampleView({model: boxShadow});
 			this.outputView = new OutputView({model: boxShadow});
