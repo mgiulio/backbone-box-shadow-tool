@@ -39,6 +39,11 @@
 	background: #000;
 	color: orange;
 }
+#controls select {
+	background-color: #000;
+	color: orange;
+	border-color: gray;
+}
 #css-output {
 	margin-left: 10px;
 	width: 480px;
