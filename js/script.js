@@ -64,7 +64,18 @@ var
 			e.stopImmediatePropagation();
 		},
 		initialize: function() {
+			this.render();
 			this.fillFieldsFromModel();
+		},
+		render: function() {
+			this.el
+				.append($('#length-property').tmpl([
+					{name: 'horizontalOffset', label: 'hOff', title: 'horizontal offset'},
+					{name: 'verticalOffset', label: 'vOff', title: 'vertical offset'},
+					{name: 'blurRadius', label: 'blur', title: 'blur radius'},
+					{name: 'spreadDistance', label: 'distance', title: 'spread distance'},
+					{name: 'color', label: 'color', title: 'color'}
+				]));
 		},
 		fillFieldsFromModel: function() {
 			var
@@ -94,7 +105,7 @@ var
 		}
 	}),
 	AppView = Backbone.View.extend({
-		el: $('.widget.box-shadow'),
+		el: $('#box-shadow'),
 		initialize: function() {
 			var boxShadow = new BoxShadowModel({
 				horizontalOffset: '5px',
@@ -102,9 +113,10 @@ var
 				blurRadius: '5px',
 				spreadDistance: '3px'
 			});
-			this.sampleView = new SampleView({model: boxShadow});
-			this.outputView = new OutputView({model: boxShadow});
-			this.controlView = new ControlView({model: boxShadow});
+			
+			new SampleView({model: boxShadow});
+			new OutputView({model: boxShadow});
+			new ControlView({model: boxShadow});
 		 }
 	})
 ;
