@@ -44,8 +44,9 @@ var
 	}),
 	ControlView = Backbone.View.extend({
 		el: $('#controls'),
-		events: {
-			'change': 'onChange',
+		events: { // The order is fundamental!
+			'change #color': 'setColor',
+			'change': 'onChange'
 		},
 		onChange: function(e) {
 			var
@@ -57,6 +58,10 @@ var
 			;
 			prop[propName] = input.val() + select.val();
 			this.model.set(prop);
+		},
+		setColor: function(e) {
+			this.model.set({color: this.$('#color input').val()});
+			e.stopImmediatePropagation();
 		},
 		initialize: function() {
 			this.fillFieldsFromModel();
