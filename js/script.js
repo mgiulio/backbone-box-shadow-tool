@@ -45,14 +45,23 @@ var
 	ControlView = Backbone.View.extend({
 		el: $('#controls'),
 		events: {
-			'change': 'onChange'
+			'change': 'onChange',
 		},
 		onChange: function(e) {
-			var o = {};
-			o[e.target.id] = e.target.value + $(e.target).next().val();
-			this.model.set(o);
+			var
+				prop = {},
+				div = e.target.parentNode,
+				propName = div.id,
+				input = $(div).find('input'),
+				select = input.next()
+			;
+			prop[propName] = input.val() + select.val();
+			this.model.set(prop);
 		},
 		initialize: function() {
+			this.fillFieldsFromModel();
+		},
+		fillFieldsFromModel: function() {
 			var
 				parse = function(x) {
 					var v = parseFloat(x);
@@ -64,7 +73,7 @@ var
 			
 			_.each(['horizontalOffset', 'verticalOffset', 'blurRadius', 'spreadDistance'], function(attr) {
 				var a = parse(self.model.get(attr));
-				self.$('#' + attr)
+				self.$('#' + attr).find('input')
 					.val(a[0])
 					.next()
 						.children()
@@ -76,7 +85,7 @@ var
 				;
 			});
 			
-			this.$('#color').val(this.model.get('color'));
+			this.$('#color').find('input').val(this.model.get('color'));
 		}
 	}),
 	AppView = Backbone.View.extend({
