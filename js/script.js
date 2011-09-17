@@ -18,6 +18,11 @@ var
 				this.attributes.spreadDistance + ' ' +
 				this.attributes.color + ';\n';
 			return '-moz-box-shadow: ' + v + '-webkit-box-shadow: ' + v + 'box-shadow: ' + v;
+		},
+		validate: function(attributes) {
+			if (parseFloat(attributes.blurRadius) < 0) {
+				return 'Blur radius cannot be negative';
+			}
 		}
 	}),
 	SampleView = Backbone.View.extend({
@@ -60,7 +65,7 @@ var
 			this.model.set(prop);
 		},
 		setColor: function(e) {
-			this.model.set({color: this.$('#color input').val()});
+					this.model.set({color: this.$('#color input').val()});
 			e.stopImmediatePropagation();
 		},
 		initialize: function() {
@@ -76,6 +81,16 @@ var
 					{name: 'spreadDistance', label: 'distance', title: 'spread distance'},
 					{name: 'color', label: 'color', title: 'color'}
 				]));
+			
+			this.$('#blurRadius').append('<div class="error">Blur radius cannot be negative</div>');
+			
+			var self = this;
+			this.model.bind('error', function(model, err) {
+				self.$('#blurRadius').addClass('error');
+				setTimeout(function() {
+					self.$('#blurRadius').removeClass('error')
+				}, 5000);
+			});
 		},
 		fillFieldsFromModel: function() {
 			var

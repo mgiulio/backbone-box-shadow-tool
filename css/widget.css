@@ -44,6 +44,18 @@
 	color: orange;
 	border-color: gray;
 }
+#controls > div {
+	position: relative;
+}
+#controls * .error {
+	position: absolute;
+	width: 50em;
+	height: 10em;
+	display: none;
+}
+#controls .error .error {
+	display: block;
+}
 #css-output {
 	margin-left: 10px;
 	width: 470px;
