@@ -46,10 +46,11 @@
 }
 #css-output {
 	margin-left: 10px;
-	width: 480px;
+	width: 470px;
 	font-family: monospace;
 	background: #000;
 	color: orange;
 	border: 1px solid white;
+	padding: 5px;
 }
 	
