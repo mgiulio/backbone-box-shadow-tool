@@ -23,23 +23,23 @@ var
 	SampleView = Backbone.View.extend({
 		el: $('#sample-box').get(0),
 		initialize: function() {
-			this.render();
-			this.model.bind('change', this.render, this);
+			this.update();
+			this.model.bind('change', this.update, this);
 		},
-		render: function() {
+		update: function() {
 			this.el.style.cssText = this.model.getCSSText();
-			return this;
+			//return this;
 		}
 	}),
 	OutputView = Backbone.View.extend({
 		el: $('#css-output'),
 		initialize: function() {
-			this.render();
-			this.model.bind('change', this.render, this);
+			this.update();
+			this.model.bind('change', this.update, this);
 		},
-		render: function() {
+		update: function() {
 			this.el.html(this.model.getCSSText());
-			return this;
+			//return this;
 		}
 	}),
 	ControlView = Backbone.View.extend({
